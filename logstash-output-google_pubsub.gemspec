@@ -5,8 +5,8 @@ Gem::Specification.new do |s|
   s.summary       = "Emit output messages to Google Pubsub topic."
   s.description   = "This gem is a Logstash output plugin to be installed on top of the Logstash core pipeline using $LS_HOME/bin/logstash-plugin install gemname. This gem is not a stand-alone program."
   s.homepage      = 'https://cloud.google.com/pubsub/overview'
-  s.authors       = ['Eric Johnson']
-  s.email         = 'erjohnso@google.com'
+  s.authors       = ['Nirav Shah']
+  s.email         = 'niravshah2705@gmail.com'
   s.require_paths = ['lib']
 
   # Files

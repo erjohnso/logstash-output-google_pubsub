@@ -12,7 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-input { stdin { } }
+input {
+   file {
+    path => "/var/log/*.log"
+    sincedb_path => "/etc/logstash/data/sincedb_pubsub"
+    start_position => "beginning"
+  }
+}
 
 # For a more real world example, use the following input and filter stanzas
 # for processing the Apache access log.
@@ -49,18 +55,18 @@ input { stdin { } }
 output {
     google_pubsub {
         # Your GCP project id (name)
-        project_id => "graphite-demos"
+        project_id => "premium-poc"
 
         # The topic name below is currently hard-coded in the plugin. You
         # must first create this topic by hand before attempting to output
         # messages to Google Pubsub.
-        topic => "logstash-input-dev"
+        topic => "pubsub-output-plugin-topic"
 
         # If you are running logstash within GCE, it will use
         # Application Default Credentials and use GCE's metadata
         # service to fetch tokens.  However, if you are running logstash
         # outside of GCE, you will need to specify the service account's
         # JSON key file below.
-        #json_key_file => "/home/erjohnso/pkey.json"
+        #json_key_file => "/home/nirav/Downloads/Premium-POC-5837fe4cfb8f.json"
     }
 }

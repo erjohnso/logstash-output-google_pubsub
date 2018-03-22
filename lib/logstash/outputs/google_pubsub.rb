@@ -36,6 +36,10 @@ class LogStash::Outputs::GooglePubsub < LogStash::Outputs::Base
   # These _could_ also be added as event fields in addition to adding them to
   # the pubsub message body
   # config :attributes...
+ #  config :use_event_fields_for_data_points, :validate => :boolean, :default => false
+   config :exclude_fields, :validate => :array, :default => [ ] #"@timestamp", "@version", "sequence", "message", "type"]  
+   config :include_fields, :validate => :array, :default => [ ] #"@timestamp", "@version", "sequence", "message", "type"]  
+   config :include_field, :validate => :string #"@timestamp", "@version", "sequence", "message", "type"]  
 
   # If logstash is running within Google Compute Engine, the plugin will use
   # GCE's Application Default Credentials. Outside of GCE, you will need to
@@ -69,7 +73,7 @@ class LogStash::Outputs::GooglePubsub < LogStash::Outputs::Base
     # TODO(erjohnso): read UA data from the gemspec
     @client = Google::APIClient.new(
       :application_name => 'logstash-output-google_pubsub',
-      :application_version => '0.9.0'
+      :application_version => '0.9.9'
     )
 
     # Initialize the pubsub API client
@@ -114,9 +118,24 @@ class LogStash::Outputs::GooglePubsub < LogStash::Outputs::Base
     # Google Pubsub only accepts base64 encoded messages. The message data
     # should be JSON which we can get from the event object using `to_json`
     # TODO add :attributes to the pubsub_message and _maybe_ event fields
-    pubsub_message = {
-      :data => Base64.urlsafe_encode64(event.to_json)
-    }
+
+     json_data =  JSON.parse(event.to_json)
+     
+     if @include_field
+ 	 pubsub_message = {
+         :data => Base64.urlsafe_encode64(json_data["#{@include_field}"])
+       }
+ 	@logger.debug(json_data["#{@include_field}"])
+     else
+     @exclude_fields.each { |field| json_data.delete(field) }
+   
+     @logger.debug(json_data.to_json)
+ #    @logger.debug("#{@topic}")
+ 
+       pubsub_message = {
+         :data => Base64.urlsafe_encode64(@include_fields.empty? ? json_data.to_json : json_data.select {|k,_| include_fields.include?(k)}.to_json)
+       }
+     end
 
     # TODO: may need to look at batch messages vs one-at-a-time
     result = request(

@@ -15,6 +15,35 @@
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
+
+## Sample Configuration file
+## output {
+## 	google_pubsub {
+## # Your GCP project id (name)
+## 		project_id => "premium-poc"
+## # The topic name below is currently hard-coded in the plugin. You
+## # must first create this topic by hand before attempting to output
+## # messages to Google Pubsub.
+## 		topic => "pubsub-output-plugin-topic"
+
+# If defined Only content of field passed as message. exclude_fields & include_fields ignored
+## 		include_fields =>  "message"  
+
+# Exclude list takes precedence over include list
+## 		exclude_fields => [ "@version" , "filename" , "tags" ]
+
+# Only mentioned field passed in json format with key
+## 		include_fields => [ "message" ]
+ 
+# If you are running logstash within GCE, it will use
+# Application Default Credentials and use GCE's metadata
+# service to fetch tokens.  However, if you are running logstash
+# outside of GCE, you will need to specify the service account's
+# JSON key file below.
+#		json_key_file => "/home/nirav/Downloads/Premium-POC-5837fe4cfb8f.json"
+#		}
+## }
+
 # limitations under the License.
 require "logstash/outputs/base"
 require "logstash/namespace"

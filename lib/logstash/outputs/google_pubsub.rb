@@ -27,7 +27,7 @@
 ## 		topic => "pubsub-output-plugin-topic"
 
 # If defined Only content of field passed as message. exclude_fields & include_fields ignored
-## 		include_fields =>  "message"  
+## 		include_field =>  "message"  
 
 # Exclude list takes precedence over include list
 ## 		exclude_fields => [ "@version" , "filename" , "tags" ]

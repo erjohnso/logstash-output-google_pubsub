@@ -11,6 +11,45 @@ Logstash provides infrastructure to automatically generate documentation for thi
 - For formatting code or config example, you can use the asciidoc `[source,ruby]` directive
 - For more asciidoc formatting tips, see the excellent reference here https://github.com/elastic/docs#asciidoc-guide
 
+## Sample Logstash file
+```sh
+output {
+	google_pubsub {
+
+# Your GCP project id (name)
+		project_id => "premium-poc"
+
+# The topic name below is currently hard-coded in the plugin. You
+# must first create this topic by hand before attempting to output
+# messages to Google Pubsub.
+#			topic => "pubsub-output-plugin-topic"
+# Dynamic topic also supported based on the field in message or logstash tags
+             topic => "%{topic}"
+
+# If defined Only content of field passed as message. exclude_fields & include_fields ignored
+		include_field =>  "message"  
+
+# Exclude list takes precedence over include list
+		exclude_fields => [ "@version" , "filename" , "tags" ]
+
+# Only mentioned field passed in json format with key
+		include_fields => [ "message" ]
+
+# Set number of retries to avoid loss due to transient issues.
+# Setting value to 0 does not retry. Default value set as 1
+		retry => 2
+
+# If you are running logstash within GCE, it will use
+# Application Default Credentials and use GCE's metadata
+# service to fetch tokens.  However, if you are running logstash
+# outside of GCE, you will need to specify the service account's
+# JSON key file below.
+
+#		json_key_file => "/home/nirav/Downloads/Premium-POC-5837fe4cfb8f.json"
+#		}
+
+}
+```
 ## Need Help?
 
 Need help? Try #logstash on freenode IRC or the https://discuss.elastic.co/c/logstash discussion forum.

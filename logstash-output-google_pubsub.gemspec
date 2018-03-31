@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name          = 'logstash-output-google_pubsub'
-  s.version       = '0.9.9'
+  s.version       = '0.9.10'
   s.licenses      = ['Apache-2.0']
   s.summary       = "Emit output messages to Google Pubsub topic."
   s.description   = "This gem is a Logstash output plugin to be installed on top of the Logstash core pipeline using $LS_HOME/bin/logstash-plugin install gemname. This gem is not a stand-alone program."

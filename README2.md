@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logstash Plugin
 
 This is a plugin for [Logstash](https://github.com/elastic/logstash).
@@ -123,3 +124,7 @@ Programming is not a required skill. Whatever you've seen about open source and 
 It is more important to the community that you are able to contribute.
 
 For more information about contributing, see the [CONTRIBUTING](https://github.com/elastic/logstash/blob/master/CONTRIBUTING.md) file.
+=======
+# logstash-output-google_pubsub
+Logstash output for sending events to the Google Pub/Sub service
+>>>>>>> upstream/master
